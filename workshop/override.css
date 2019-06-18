@@ -1,0 +1,20 @@
+.reveal section img {
+  border: none;
+  background: none;
+  margin: 0;
+  box-shadow: none;
+}
+
+.reveal pre code {
+  overflow-y: auto !important;
+  overflow-x: auto !important;
+  border-radius: 5px;
+}
+
+.hljs {
+  background: #F0F0F0 !important;
+}
+
+.output code {
+  background: white !important;
+}
