@@ -1,0 +1,25 @@
+{
+    "name": "cmd-line-tag",
+    "mill": "/json",
+    "plaintext": true,
+    "json_schema": {
+        "title": "CMD Line Tag Mechanics",
+        "description": "Possible events in cmd line tag.",
+        "type": "object",
+        "required": [ "event" ],
+        "properties": {
+            "event": {
+                "type": "string",
+                "description": "event type identifier"
+            },
+            "target": {
+                "type": "string",
+                "description": "peer-id of that the event modifies"
+            },
+            "extra": {
+                "type": "string",
+                "description": "extra information"
+            }
+        }
+    }
+}

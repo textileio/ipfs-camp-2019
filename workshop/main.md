@@ -1,12 +1,12 @@
 ---
-theme: "white"
+theme: "simple"
 transition: "slide"
 highlightTheme: "vs"
 ---
 
 <link rel="stylesheet" href="./override.css"/>
 
-<!-- .slide: data-background-image="https://docs.textile.io/images/home.png" data-background-opacity="0.5" -->
+<!-- .slide: data-background-image="./images/background-alt.png"   -->
 
 ## Building DApps with **Textile**, the iCloud for the DWeb
 
@@ -15,8 +15,6 @@ highlightTheme: "vs"
 ## Welcome!
 
 ![](https://docs.textile.io/images/hand.png)
-
-Placeholder Image
 
 note:
   The goal of this workshop is to introduce you to tools and techniques to facilitate building real-world apps and libraries on top of IPFS.
@@ -84,37 +82,39 @@ note:
 
 ## Demo!
 
-![](https://docs.textile.io/images/mobile.png)
+<!-- .slide: data-background-color="black" --> 
+
+![](./images/game.png)
 
 note:
-  - Andrew to go through demo of mobile Game of Tag app. He'll do a demo, and describe what is happening as he goes. At the same time, we'll demo the leader-board app, to showcase multiple apps using the same data.
+  - Andrew to go through demo of mobile IPFS Tag app. He'll do a demo, and describe what is happening as he goes.
 
 ---
 
 ## Anatomy of a game
 
-[![](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/861a9f70-42dc-4b81-aed7-047e193633d6/d2svhoj-4f8564c9-f806-4187-8340-78acb11e6e90.jpg/v1/fill/w_900,h_637,q_75,strp/art_meats_technology_by_madspeitersen_d2svhoj-fullview.jpg) <!-- .element: style="height:500px" -->](https://www.deviantart.com/madspeitersen/gallery/)
+<!-- .slide: data-background-image="./images/what-does-it-take.png" data-background-position="right 150px bottom 0px" data-background-size="250px"-->
+
+What does it take to build a **Game of Tag** on **IPFS** using decentralized data, content addressing, and encrypted communication?
 
 --
 
-## Games are about fun
+## What is a game of tag?
 
-- Only a **few things** needed for IPFS Tag...
-  - Way to uniquely identify peers
-  - Set of rules and (logically centralized) game environment
-  - Means of communicating actions (i.e. *tagging*) and tracking (i.e. *who’s it*)
-  - Simple user interface
+- A group of individuals, 
+- Agreeing on a set of rules, 
+- With a shared record or state, and
+- A way to communicate & verify game play
 
 --
 
-## Fun with Textile
+## How does Textile do it?
 
-- Textile-based dapps meet requirements with some basic [concepts](https://docs.textile.io/a-tour-of-textile/#concepts)...
-  - *Identifying peers* done via data [wallets](https://docs.textile.io/concepts/the-wallet/) & [accounts](https://docs.textile.io/concepts/the-wallet/#accounts)
-  - *Rules* & *game environment* are defined using [schemas](https://docs.textile.io/concepts/threads/files/#schemas)
-  - *Communication* & *score-keeping* done via [threads](https://docs.textile.io/concepts/threads/)
-  - User interface provided via client libraries
-    - Today we’ll play with [cmdline](https://docs.textile.io/develop/clients/command-line/) and [javascript](https://docs.textile.io/develop/clients/javascript/)
+- *Identifying individuals* done via data [wallets](https://docs.textile.io/concepts/the-wallet/) & [accounts](https://docs.textile.io/concepts/the-wallet/#accounts)
+- *Rules* defined using [schemas](https://docs.textile.io/concepts/threads/files/#schemas)
+- *Shared record* & *communication* done via [threads](https://docs.textile.io/concepts/threads/)
+- *Game environment* provided via client libraries
+  - Today we’ll play with [cmdline](https://docs.textile.io/develop/clients/command-line/)
 
 --
 
@@ -133,7 +133,7 @@ note:
 
 --
 
-## The wallet
+## Wallet & Accounts
 
 ![](https://docs.textile.io/images/wallet.png)
 
@@ -142,16 +142,6 @@ note:
   - Every account seed "inside" the wallet can be derived from this mnemonic phrase. Meaning that the wallet effectively *is* the mnemonic phrase. Any given wallet may create an arbitrary number of accounts. For example, a single wallet can be used to provision multiple Textile Photos "accounts", each with a completely different persona. This provides a powerful partitioning framework.
   - Textile account seeds (private keys) always start with an "S" for "secret" and account addresses (public keys) always start with a "P" for "public".
   - The actual implementation is a BIP32 Hierarchical Deterministic Wallet based on Stellar's implementation of SLIP-0010.
-
---
-
-## Accounts
-
-![](https://docs.textile.io/images/fingerprint.png)
-
-Placeholder Image
-
-note:
   - Account seeds and their public addresses are generated via the wallet pass-phrase. Textile uses ed25519 keys, which is public-key signature system with several attractive features like fast key generation, signing, and verification. These properties become important on less powerful devices like phones.
   - Account seeds are used to provision new Textile peers. For example, a mobile peer, a desktop peer (like we'll be doing today), etc. Individual peers are tied to a single IPFS instance.
   - Peers that are backed by the same account are called account peers. Account peers will automatically stay in sync. They are able to instruct one another to create and delete threads. Additionally, they will continuously search the network for each other's encrypted thread snapshots (metadata and the latest update hash, usually stored by cafes).
@@ -177,7 +167,7 @@ note:
 
 --
 
-## Background
+<!-- .slide: data-background-image="./images/thread.png" data-background-size="contain" -->
 
 note:
   - Threads are the backbone of Textile's encrypted, recoverable, schema-based, and cross-application data storage. Think of a thread as a decentralized database of encrypted files and messages, shared between specific participants.
@@ -194,24 +184,35 @@ note:
 
 ## Requirements
 
+- Conflict resistant
+- Mud puddle resistant
+- Offline-first
+- Secure
+- Language agnostic
+
+Both a data **structure** & **protocol**
+
 note:
   - Threads are supposed to serve a decentralized cloud-like function for safely storing and retrieving data generated by applications for users, i.e., photos, messages, contacts, tag events, etc. They were designed with the following requirements in mind:
     - Conflict resistant: Similar to ipfs-log, a thread should facilitate a resilient, distributed state, shared among multiple members (and/or devices).
     - Mud puddle resistant: There should be a way to safely backup a thread's state such that the owner can recover it.
     - Offline-first: Because most people access the internet primarily from mobile devices, threads must enable a UX that works well in scenarios where connectivity is spotty, and peers are continually coming and going from the network.
     - Secure: Peers must sign updates and encrypted with the shared key. Ideally, linkages should also be obscured by encryption.
-    - On the one hand, threads are a data model for representing a dataset as a hash-chain of updates. On the other hand, it's a protocol for orchestrating that state between peers.
-    - Threads aim to be language and platform agnostic. For this reason, Textile uses protocol buffers extensively because they are a "language-neutral, platform-neutral, extensible mechanism for serializing structured data".
+    - Agnostic: Threads aim to be language and platform agnostic. For this reason, Textile uses protocol buffers extensively because they are a "language-neutral, platform-neutral, extensible mechanism for serializing structured data".
+  - So on the one hand, threads are a data model for representing a dataset as a hash-chain of updates. On the other hand, it's a protocol for orchestrating that state between peers.
 
 --
 
 ## Access Control
+
+![](https://docs.textile.io/images/fingerprint.png)
 
 note:
   - Control over thread access and sharing is handled by a combination of the type and sharing settings.
   - An immutable member address "whitelist" gives the initiator fine-grained control. An empty whitelist is taken to be "everyone", which is the default.
   - Threads also support general access control in the form of 'private', 'read-only', 'public', and 'open' threads.
   - Similarly, inviting new members to a thread can be controlled via sharing control, with options for 'not sharable', 'invite only', or 'shared'.
+  - We're actually in the process of revamping our access control settings to feel more like web 2.0 style settings. I believe there is actually going to be a session about this with the Epona team?
 
 --
 
@@ -236,6 +237,8 @@ note:
 --
 
 ## Files
+
+![](https://docs.textile.io/images/files.png)
 
 note:
   - Any data added to a thread ends up as a file. Most of the time, a schema is used to define one or more types of data in a thread such that other users and applications can understand it.
@@ -402,11 +405,29 @@ note:
 
 ---
 
-## Games are meant to be played
+## Games are about friends
 
 ![](https://docs.textile.io/images/friends.png)
 
-Placeholder Image
+--
+
+## Contacts
+
+![](https://docs.textile.io/images/contact.png)
+
+note:
+  - Textile is based around the idea of sharing information between peers. Since this is the case, we need a way to identify and distinguish between different peers or accounts.
+  - As you've already seen, we have the concept of a wallet and account address, which is exactly how we also distinguish between contacts. Textile has taken a pretty agnostic approach to decentralized identity so far, because there are so many folks working in this space. To date, we haven't focused too much on *unique* ids, or provable real-world identities, but it is easy to link external identities (say a Keybase ID, or some DiD framework such as such as IDM) to a Textile wallet or account
+  - In that vein, a contact can be thought of as a set of ephemeral agents (peers) owned by a single account. That account can have whatever avatar, display name, real-world association that you want.
+  - Each of these peers shares a special private account thread, which tracks account peers, profile information, and known contacts. When indexed, this thread provides:
+    - A "self" contact, much like iOS or other contact systems, which is advertised to the network and indexed for search by registered cafes.
+    - A contact "address book" for interacting with other users.
+  - As shown in the diagram here, a contact will display profile information (name and avatar) from the most recently updated peer. This is pretty powerful, because it means changes made on your mobile device will be automatically reflected on your desktop or in other user's thread information. The network will update changes you make automatically, in an offline-first way.
+  - So for our game of tag, we'll use contact information to invite new users to our game, or join existing games ourselves.
+
+---
+
+## Games are meant to be played
 
 --
 
@@ -461,9 +482,7 @@ Placeholder Image
 
 ## Let's Play
 
-![](https://docs.textile.io/images/friends.png)
-
-Placeholder Image
+![](./images/game.png)
 
 --
 
@@ -603,9 +622,11 @@ note:
   - Just one peer so far. This object is actually a contact. We'll come back to contacts later.
   - You can also do other things with your account, such as view your account seed, sync your account with the network, etc. See `textile account --help` for details.
 
---
+---
 
 ## Threads
+
+<!-- .slide: data-background-image="https://docs.textile.io/images/blocks_s.png" data-background-size="contain" -->
 
 ```
 {
@@ -614,6 +635,7 @@ note:
     "mill": "/blob"
 }
 ```
+<!-- .element: class="fragment" -->
 
 note: 
   - Ok, time to get serious. Let's create a basic thread to start exploring how we'd connect peers within a game of tag.
@@ -724,7 +746,7 @@ note:
 ## Encryption
 
 ```
-textile files keys Qmahash
+👨‍💻 textile files keys Qmahash
 ```
 ```
 {
@@ -733,6 +755,7 @@ textile files keys Qmahash
     }
 }
 ```
+<!-- .element: class="output" -->
 
 note:
   - Speaking of encryption, unless a schema step specifies "plaintext": true (which we didn't have in our blob schema), the value of meta and content are both encrypted with the Advanced Encryption Standard (AES) using their very own symmetric key. We can view the keys for each node in the DAG using the keys command.
@@ -758,7 +781,7 @@ Note:
 note:
   - We won't dwell on this example too much, because now its time to start playing tag.
 
---
+---
 
 ## Rules
 
@@ -791,8 +814,9 @@ note:
 ```
 
 note:
-  - Let's go through one more thread use case that demonstrates how to create a custom DAG schema. We'll make use of a custom JSON schema for tracking JSON documents.
-  - Make a file called `tag.json`, with the following content (or use the existing one in the repo you clone earlier).
+  - Ok, so like the real game of tag, our game needs rules, otherwise, its really just a bunch of people running around tapping each other... which is weird.
+  - So let's go through one more thread use case that demonstrates how to create a custom DAG schema. We'll make use of a custom JSON schema for tracking JSON documents. In this case, our documents will be used to encode 'tag' events.
+  - To start, make a file called `tag.json`, with the following content (or use the existing one in the repo you clone earlier).
   - Notice the special 'json_schema' key. This is where you can specify the custom JSON-based schema that your thread updates must satisfy. The really cool thing here is that Textile threads support json-schema.org schemas out of the box. So you can specify pretty complicated workflows and required properties, ensuring your app behaves exactly the way you're expecting it to. Validation in done client side, so there's no required intermediate server at any point along the way.
   - In this case, we have one required property, event, just to show you some features of json-schema.org. I highly recommend you check it out for more details.
 
@@ -801,43 +825,144 @@ note:
 ## Schemas
 
 ```bash
-textile threads add "Tag" --schema-file=/path/to/tag.json --type="public" --sharing="invite_only"
+👩‍💻 textile threads add "Tag" --schema-file=/path/to/tag.json --type="public" --sharing="invite_only"
 ```
+```
+{
+    "block_count": 1,
+    "id": "12D3Kxxx",
+    "initiator": "Pxxx",
+    "key": "xxx",
+    "name": "Tag",
+    "peer_count": 1,
+    "schema": "Qmhash",
+    "schema_node": {
+        "json_schema": {
+            "description": "Possible events in cmd line tag.",
+            "properties": {
+                "event": {
+                    "description": "event type identifier",
+                    "type": "string"
+                },
+                "extra": {
+                    "description": "extra information",
+                    "type": "string"
+                },
+                "target": {
+                    "description": "peer-id of that the event modifies",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "event"
+            ],
+            "title": "CMD Line Tag Mechanics",
+            "type": "object"
+        },
+        "mill": "/json",
+        "name": "cmd-line-tag",
+        "plaintext": true
+    },
+    "sharing": "INVITE_ONLY",
+    "sk": "xxx",
+    "state": "LOADED",
+    "type": "PUBLIC",
+    "whitelist": []
+}
+```
+<!-- .element: class="output" -->
 
 note:
-  - So to utilize our custom schema, we'll simply create a new thread, this time specifying the custom json document we just created
+  - So to utilize our custom schema, we'll simply create a new thread, this time specifying the custom json document we just created.
 
 --
 
 ## Adding
 
 ```bash
-echo '{ "event": "tag", "target": "'<peer-id>'" }' | textile files add <thread-id>
+👨‍💻 echo '{ "event": "tag", "target": "'<address>'" }' | textile files add <thread-id>
 ```
+```
+{
+    "block": "Qmhash",
+    "target": "Qmhash",
+    "date": "2019-06-18T17:51:33.424170Z",
+    "user": {
+        "address": "Pxxx",
+        "name": "carson"
+    },
+    "files": [
+        {
+            "file": {
+                "mill": "/json",
+                "checksum": "xxx",
+                "source": "xxx",
+                "opts": "xxx",
+                "hash": "Qmhash",
+                "media": "application/json",
+                "size": "75",
+                "added": "2019-06-18T17:51:33.033629Z",
+                "meta": {
+                    },
+                "targets": [
+                    "Qmxxx"
+                ]
+            }
+        }
+    ],
+    "comments": [
+    ],
+    "likes": [
+    ],
+    "threads": [
+        "12D3Kxxx"
+    ]
+}
+```
+<!-- .element: class="output" -->
 
 note:
-  - Then, to actually *use* our new thread, we simply add some json data...
+  - Now, to actually *use* our new thread, we simply add some json data... in this case, we'll just echo the JSON data as a string. The Textile cli tool is smart enough to figure that out and add it as a JSON 'file'
   - Your peer will validate the input against the thread's schema. The input will also be validated against its embedded JSON schema (schemas within schemas!).
   - Upon success, you'll get back a nicely formatted block update.
-  - You can try adding an update _without_ the event key, which is invalid. This should result in a error. This is handy, because it means your app peers won't corrupt a thread with invalid data, ever.
+  - You can try adding an update _without_ the event key, which is invalid. This should result in a error (you should see something like `- (root): event is required`). This is handy, because it means your app peers won't corrupt a thread with invalid data, ever.
 
 --
 
 ## Friends
 
-```bash
-textile invite create <thread-id> --address=<neighbor-peer-id>
-```
+- [Create a peerpad](https://peerpad.net) to share thread information
+- Invite them directly
+    ```bash
+    👩‍💻 textile invite create <thread-id> --address=<neighbor-peer-id>
+    ```
+    ```
+    ok
+    ```
+    <!-- .element: class="output" -->
+
+- or create external invite
+    ```
+    👨‍💻 textile invites create <thread-id>
+    ```
+    ```
+    {
+      "id": "Qmhash",
+      "inviter": "Pxxx",
+      "key": "xxx"
+    }
+    ```
+    <!-- .element: class="output" -->
 
 note:
 - Tag is going to be pretty boring if we don't have some friends to play with... Textile has several ways to handle this.
 - The most useful, is to create an invite to your game thread, and invite other Textile peers. Those other peers can then ‘accept or add’ the invite to join your game, or of course, they could create their own game and corresponding invite.
 - So let's share our thread with another user. It was created with type, "open", meaning that other members will be able to read thread updates, *and* add new updates. In other words, our threads will be writable by all members.
-- Let's try something here, turn to the nearest person or group of people following along, and exchange peer ids. You can email, text, share a piece of paper, use textile photos, or ...
+- Let's try something here, turn to the nearest person or group of people following along, and exchange peer ids. You can email, text, share a piece of paper, use textile photos, or use peerpad, which is an ipfs-based p2p collaboration tool.
 - Next, let's create a direct p2p invite to invite that peer to our thread. Alternatively, you could create an external thread invite, which would include the thread key by leaving off the address .
 - This is slightly less secure, in that you need to send along a key, but can be done reasonably safely by using a secure channel such as e2e encrypted chat, encrypted email, or even qr codes a physical proximity. Obviously if you don't care about privacy (for example, its an open thread, then could just post the thread id and key somewhere for everyone to access)
 
----
+--
 
 ## Messages
 
@@ -860,37 +985,75 @@ note:
 <!-- .element: class="output" -->
 
 note:
-  - A big part of tag is actually verbal communication. "Na na, you can't catch me!" and other taunts are *part* of the game. Our p2p tag game is no different.
-  - With Textile, any thread can take a plain old text message. Later, we'll use these within the game to communicate (you can even use it after this session to communicate with folks at the conference). Be sure to replace the thread parameter with the ID of the thread you generated in the last step.
-
---
-
---
-
-## Explore
-
-- List thread blocks
-- List contacts
-- Add messages
-- Add data
-
---
-
-## Query
-
-- Feed API
-- Observe API
+  - Our game setting is almost complete, just a few more steps and we'll have a fully working command-line game of tag.
+  - First though, a big part of tag is actually verbal communication. "Na na, you can't catch me!" and other taunts are *part* of the game. Our p2p tag game is no different.
+  - With Textile, any thread can take a plain text message. We can use these within the game to communicate with each other.
+  - You can even use it after this session to communicate with folks at the conference!
+  - Be sure to replace the thread parameter with the ID of the thread you generated in the last step.
 
 ---
 
+## Explore!
 
+- List thread blocks (`textile thread blocks`)
+- List contacts (`textile contacts list`)
+- Add (more) messages (`textile messages add`)
+- Add (more) data (`textile files add`)
+- View a feed (`textile feed`)
+- Observe real-time updates (`textile observe`)
+- Get help (`textile <sub command> --help`)
 
-# Contact
-
-![](https://docs.textile.io/images/contact.png)
+note:
+  - And there we have it, our game is basically ready to go. So let's play around with some tag. Here are a few things you can try as you explore the threads you've created. There are lots of useful APIs to explore, all of which are available in all the various sdks and apis that textile offers.
+  - For example, you can produce a 'feed' of events with the feed api, or observe real-time updates to a thread or all threads via the observe api. This makes things like real-time chat or a game of tag easy to monitor and play around with.
 
 ---
 
+## Group Game
+
+Join
+```
+👨‍💻 textile invites accept <invite-id> --key=<invite-key>
+```
+Check
+```
+👨‍💻 sh am-i-it.sh <thread-id>
+```
+Play
+```
+👩‍💻 sh tag-peer.sh <thread-id> <address>
+```
 
 
--->
+note:
+  - To facilitate a group game, Andrew has created a set of pre-built command line tools specific to our IPFS tag game.
+  - If you cloned the repo from earlier, you should already have a series of bash scripts that you can use to more easily play tag.
+  - So for fun, why don't we all join a single game of tag, and get going.
+  - You can also grab the mobile version, and join the game we've already started by finding someone already in the game, and having them invite you via the QR code on their game screen.
+  - Tag is a lot more fun as the game gets bigger, so please do join the game!
+
+---
+
+## Hack and break things!
+
+- Time now to explore, collaborate, have fun
+- If you want to try out the mobile app  
+  http://t.txtl.us/
+- If you want to check out the mobile app  
+  https://github.com/textileio/...
+- If you want to hack on a tag leader-board  
+  https://github.com/textileio/...
+
+---
+
+<!-- .slide: data-background-color="#2935FF" style="color: white;" -->
+
+## Learn More
+
+- [Concepts](https://docs.textile.io/concepts/)
+- [Take the Tour](https://docs.textile.io/a-tour-of-textile/)
+- [@textileio](https://textile.io)
+  - [Slack](https://slack.textile.io)
+  - [GitHub](https://github.com/textileio)
+  - [Twitter](https://twitter.com/textileio)
+  - [Blog](https://medium.com/textileio)
