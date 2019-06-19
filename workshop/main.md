@@ -167,7 +167,7 @@ note:
 
 --
 
-<!-- .slide: data-background-image="./images/thread.png" data-background-size="contain" -->
+<!-- .slide: data-background-image="./images/threads.png" data-background-size="contain" -->
 
 note:
   - Threads are the backbone of Textile's encrypted, recoverable, schema-based, and cross-application data storage. Think of a thread as a decentralized database of encrypted files and messages, shared between specific participants.
@@ -218,6 +218,8 @@ note:
 
 ## Blocks
 
+<!-- .slide: data-background-image="./images/thread.png" data-background-size="contain" -->
+
 note:
   - Blocks are the raw components of a thread. Think of them as an append-only log of thread updates where each one is hash-linked to its parent(s), forming a tree. New / recovering peers can sync history by merely traversing the hash tree.
   - In practice, blocks are small (encrypted) protocol buffers, linked together by their IPFS CID (content id or hash).
@@ -232,7 +234,7 @@ note:
     -  FILES:    File(s) added.
     -  COMMENT:  Comment added to another block.
     -  LIKE:     Like added to another block.
-  - The orchestration of thread state between peers can be thought of as syncing a graph of blocks and files, which involves sending outbound updates and reading inbound updates. In practice, this is handled by a libp2p service.
+  - The orchestration of thread state between peers can be thought of as syncing a graph of blocks and files, which involves sending outbound updates and reading inbound updates. In practice, this is handled by a *libp2p service*.
 
 --
 
