@@ -13,9 +13,11 @@ Our goals will include exploring the state-of-the-art in mobile peer-to-peer (p2
 ## Requirements to consider
 
 Mobile environments come with their own specific requirements to consider. Some of these requirements include:
-- Limited compute, and battery life
+- Limited compute, storage, bandwidth, and battery life
 - Operating system limitations
   - Apps generally are sand-boxed, cannot run for long in the background, may be killed to preserve battery, cannot (or is difficult to) share data
+- Current mobile OSes are highly centralized
+  - App stores, remote notification systems, etc are all based around centralized systems and walled gardens
 - User interactions on mobile are fundamentally different
   - Apps are generally only open long enough to complete a single interaction
   - Touch, tap, swipe, zoom
@@ -26,6 +28,7 @@ Mobile environments come with their own specific requirements to consider. Some 
   - Cross-platform in mobile is even more difficult
   - Though it can, and is currently being, done (see links below)
 - Should be scalable to millions of peers
+- Should support real-time notifications (local and remote)
 - Should interface seamlessly with desktop and server peers
 - May require 'always on' support or a 'hybrid-style' network
 

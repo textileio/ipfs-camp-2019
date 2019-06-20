@@ -882,7 +882,7 @@ note:
 ## Adding
 
 ```bash
-👨‍💻 echo '{ "event": "tag", "target": "'<address>'" }' | textile files add <thread-id>
+👨‍💻 echo '{ "event": "tag", "target": "<address>" }' | textile files add <thread-id>
 ```
 ```
 {
