@@ -58,3 +58,6 @@ This stuff can be done in groups!
 `git checkout ipfs-tag`
 - Follow the installation and setup direction in the `README.md`
 
+## Textile Photos Invite
+
+![dynamic qr code](http://camp.textile.photos/)
