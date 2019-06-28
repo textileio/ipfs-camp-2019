@@ -213,7 +213,7 @@ export default class App extends Component<{}, AppState> {
     return <JoinModal
       onSubmit={this.handleThread}
       threadList={this.state.threadList ? this.state.threadList.items.map((thread) => {
-        return { text: thread.name, value: thread.id }
+        return { text: `${thread.name} (${thread.id.slice(-8)})`, value: thread.id }
       }) : []} />
   }
 }

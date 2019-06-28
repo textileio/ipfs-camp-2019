@@ -862,7 +862,7 @@ note:
 ## Schemas
 
 ```bash
-👩‍💻 textile threads add "Tag" --schema-file=/path/to/tag.json --type="public" --sharing="invite_only"
+👩‍💻 textile threads add "Tag" --schema-file=/path/to/tag.json --type="open" --sharing="invite_only"
 ```
 ```
 {
@@ -903,7 +903,7 @@ note:
     "sharing": "INVITE_ONLY",
     "sk": "xxx",
     "state": "LOADED",
-    "type": "PUBLIC",
+    "type": "OPEN",
     "whitelist": []
 }
 ```
