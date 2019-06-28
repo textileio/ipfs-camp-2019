@@ -562,6 +562,34 @@ note:
 
 --
 
+## Cafes
+
+```bash
+👩‍💻 textile cafe add 12D3KooWGN8VAsPHsHeJtoTbbzsGjs2LTmQZ6wFKvuPich1TYmYY --token=uggU4NcVGFSPchULpa2zG2NRjw2bFzaiJo3BYAgaFyzCUPRLuAgToE3HXPyo
+```
+```json
+{
+    "access": "xxx",
+    "cafe": {
+        "address": "Pxxx",
+        "api": "v1",
+        "node": "0.5.3",
+        "peer": "12D3Kxxx",
+        "protocol": "/textile/cafe/1.0.0",
+        "url": "https://us-west-dev.textile.cafe"
+    },
+    "exp": "2019-07-26T10:25:19.333555816Z",
+    "id": "12D3Kxxx",
+    "refresh": "xxx",
+    "rexp": "2019-08-23T10:25:19.333555816Z",
+    "subject": "12D3Kxxx",
+    "type": "JWT"
+}
+```
+<!-- .element: class="output" -->
+
+--
+
 ## Profile
 
 ```bash
@@ -941,6 +969,7 @@ note:
 ## Friends
 
 - [Create a peerpad](https://peerpad.net) to share thread information
+- Use me: `12D3KooWHbuPJ7cJ9kKXKrx6M3Wgakup5DjCa6jMwLodPYDiVpSX`
 - Invite them directly
     ```bash
     👩‍💻 textile invite create <thread-id> --address=<neighbor-peer-id>
