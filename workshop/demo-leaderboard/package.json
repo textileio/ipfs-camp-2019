@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@ef-carbon/url": "^2.4.3",
-    "@textile/js-http-client": "^0.2.21",
+    "@textile/js-http-client": "^1.0.0",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",

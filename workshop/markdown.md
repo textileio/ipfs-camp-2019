@@ -17,19 +17,24 @@ highlightTheme: "vs"
 ![](https://docs.textile.io/images/hand.png)
 
 note:
-  The goal of this workshop is to introduce you to tools and techniques to facilitate building real-world apps and libraries on top of IPFS.
-  We'll do this through the lens of real app development, starting with a simple p2p game/example.
-  We'll use Textile developer tools to do this, and we'll cover core concepts such as *structured data and schemas*, *decentralized database handling via threads*, *identity*, *contacts, and peers*, and a bunch of social interactions such as *likes, comments, and sharing*.
+- So first off, welcome!
+- In today's workshop we're going to introduce you to a bunch of tools and techniques to facilitate building real-world apps and libraries on top of IPFS.
+- We're going to do this through the lens of real app development, starting with a simple game of peer-to-peer tag (which is kind of funny, because tag is pretty much p2p to start with, but we'll make it even more so).
+- We'll use Textile developer tools to do this, and we'll cover several concepts core to the Textile ecosystem, including *structured data and schemas*, *decentralized database handling via threads*, *identity*, *contacts, and peers*, and a bunch of social interactions such as *likes, comments, and sharing*.
 
 --
 
 ## Textile
 
+<!-- .slide: data-background-image="https://docs.textile.io/images/net.png" data-background-size="contain" -->
+
 ### ...a set of tools and trust-less infrastructure for building censorship resistant and privacy preserving applications
 
 note:
-  - Speaking of Textile... Textile provides encrypted, recoverable, schema-based, and cross-application data storage built on IPFS and libp2p. While interoperable with the whole IPFS peer-to-peer network, Textile-flavored peers represent an additional layer or sub-network of users, applications, and services.
-  - Along with that network, comes a bunch of developer tools that make building working dapps much easier, so that's what we'll be playing with today.
+- I've already said Textile 3 times, so speaking of Textile...
+- Textile provides encrypted, recoverable, schema-based, and cross-application data storage built on IPFS and libp2p.
+- While interoperable with the whole IPFS peer-to-peer network, Textile-flavored peers represent an additional layer or sub-network of users, applications, and services. I've heard it referred to a layer 2 of sorts if you're into that kinda thing.
+- We've then built a bunch of developer tools on top of that network, which make building cross-platform dapps on IPFS much easier, so that's what we'll be playing with today.
 
 --
 
@@ -44,10 +49,10 @@ note:
 Sander | Aaron | Thomas
 
 note:
-  - Our team today includes about half of Textile, so if anything goes wrong during the session, remember that it's the *other half's* fault, not ours ;) I think the way we're going to do this, is that I'll go through the session with you all, and Andrew and Ben will be available to troubleshoot, answer questions, and correct me when I make mistakes...
-  - I'm Carson Farmer, and I've been with Textile since the start, mostly building tools, writing about IPFS and Textile, developing training materials, and working on some new Javascript tools. I've written a lot about building tools with IPFS,
-  - And Andrew...
-  - ANd Ben...
+- Our team today includes about half of Textile, so if anything goes wrong during the session, remember that it's the *other half's* fault, not ours ;) I think the way we're going to do this, is that I'll go through the session with you all, and Andrew and Ben will be available to troubleshoot, answer questions, and correct me when I make mistakes...
+- I'm Carson Farmer, and I've been with Textile since the start, mostly building tools, writing about IPFS and Textile, developing training materials, and working on our Javascript offerings. I've also written a lot about building tools with IPFS.
+- And Andrew...
+- ANd Ben...
 
 ---
 
@@ -58,25 +63,33 @@ note:
   - Second half is **practical**
 
 note:
-  - We're going to split the session into two parts, with a break in the middle to let you stretch your legs, ask us questions, grab coffee, discretely leave without us noticing, whatever.
-  - The first half is going to be pretty conceptual, and will involve demos, examples, and probably lots of questions. 
-  - The second half is going to be much more hands on, we'll get you to install some things, run some command-line tools, play some tag, etc.
-  - We're going to assume *some* knowledge of IPFS and DWeb concepts in general. Some development experience, though not necessarily mobile or DApps. A working laptop with a modern development setup (Nodejs, React, or even iOS-Xcode would be great). That's about it.
+- So the outline for today is pretty straight-forward.
+- We're going to split the session into two parts, with a break in the middle to let you stretch your legs, ask us questions, grab coffee, discretely leave without us noticing, whatever.
+- The first half is going to be pretty conceptual, and will involve demos, examples, and probably lots of questions. 
+- The second half is going to be much more hands on, we'll get you to install some things, run some command-line tools, play some tag, etc.
+- We're going to assume *some* knowledge of IPFS and DWeb concepts in general. Some development experience, though not necessarily mobile or DApps. A working laptop with a modern development setup (Nodejs, React, or even iOS-Xcode would be great). And that's about it. You can sit back and listen, follow along, or even join a group of folks and work together. Whatever your style.
 
 --
 
 ## Structure
 
-1. Demo & initial setup
+1. Welcome & Demo
 2. Anatomy of a game/dapp
 3. Break & questions
 4. Hands on fun/command-line
 5. Wrap-up & hackery
 
 note:
-  - The session will follow this general structure mostly. With a fun demo (which some of you might have already been exposed to), explore the anatomy of our little game dapp, cover some dweb and IPFS-related concepts, then we'll break, and jump into the hands-on component. Here's where you'll actually start to see how things like structured data, threads, p2p communication, etc is used to enhance the user experience.
-  - Then we'll finish with a bit of a wrap-up discussion/post-mortem of the session, where we can touch on possible extensions, alternatives, ideas, collaborations, etc.
-  - By the end of the session, if we're done our job, and you've done yours, we'll have a) dissected a working dapp, explored its underlying infrastructure, and maybe even written a few lines of code. We'll also touch on mobile app development a *little* bit, but ultimately 1hr is only enough time to give you a *taste* of building dapps with Textile and IPFS.
+- The session will follow this general structure mostly. With a fun demo to start (which some of you might have already been exposed to)
+- Then we'll explore the anatomy of our IPFS tag dapp, cover some Textile and IPFS-related concepts, then we'll break
+- After the break, we'll jump into the hands-on component
+- Here's where you'll actually start to see how things like structured data, threads, p2p communication, etc is used to enhance the user experience.
+- I'd like to leave plenty of time at the end to hack around and break things, and maybe demo some Javascript code for those who are interested. So let's see where we get.
+- By the end of the session, if we're done our job, and you've done yours, we'll have
+  a) dissected a working dapp
+  b) explored its underlying infrastructure, and
+  c) maybe even written a few lines of code.
+- We'll also touch on mobile app development a *little* bit, but ultimately 1hr is only enough time to give you a *taste* of building dapps with Textile and IPFS.
 
 ---
 
@@ -87,13 +100,16 @@ note:
 ![](./images/game.png)
 
 note:
-  - Andrew to go through demo of mobile IPFS Tag app. He'll do a demo, and describe what is happening as he goes.
+- Ok, demo time... Andrew, take it away...
 
 ---
 
 ## Anatomy of a game
 
 What does it take to build a **Game of Tag** on **IPFS** using decentralized data, content addressing, and encrypted communication?
+
+note:
+- What does it take to build a **Game of Tag** on **IPFS** using decentralized data, content addressing, and encrypted communication?
 
 --
 
@@ -103,6 +119,10 @@ What does it take to build a **Game of Tag** on **IPFS** using decentralized dat
 - Agreeing on a set of rules, 
 - With a shared record or state, and
 - A way to communicate & verify game play
+
+note:
+- So, a game of tag is really no more than a group of individuals, who have all agreed on a set of rules for the game, with a shared record or state, and a way to communicate & verify game play as the game progresses.
+- Its quite a simple example, but it maps really nicely onto p2p interactions, so let's break it down a bit.
 
 --
 
@@ -114,14 +134,12 @@ What does it take to build a **Game of Tag** on **IPFS** using decentralized dat
 - *Game environment* provided via client libraries
   - Today we’ll play with [cmdline](https://docs.textile.io/develop/clients/command-line/)
 
----
-
-<!-- .slide: data-background-image="https://docs.textile.io/images/net.png" data-background-size="contain" -->
-
-
 note:
-  - Textile peers use p2p messaging patterns to orchestrate shared datasets, or more specifically your chats, contacts, albums, and more. With iCloud or another major cloud provider, you expect these datasets to be synced across your devices. Additionally, if you've shared a dataset like a playlist or photo album with other users, you would expect changes to be synced with their devices as well. You can expect the same with Textile, but without the centralized control of a single organization or government.
-  - MORE PLEASE
+- How might we do IPFS Tag using Textile? Well here are a few core concepts that we'll cover today to help make our IPFS game of Tag:
+- Identifying individuals is done via data wallets & accounts,
+- Rules are defined using something we call schemas (which are a lot like the schemas you're thinking of)
+- A shared record or game state, and communication of said state will be handled using Textile's threads, which are essentially decentralized database tables,
+- And we will interface with the game environment via our command-line client library, although we'll show examples of our mobile, and javascript clients as well.
 
 ---
 
@@ -136,14 +154,14 @@ note:
 ![](https://docs.textile.io/images/wallet.png)
 
 note:
-  - Textile uses a hierarchical deterministic (HD) wallet to derive account keys from a set of unique words, called a mnemonic phrase.
-  - Every account seed "inside" the wallet can be derived from this mnemonic phrase. Meaning that the wallet effectively *is* the mnemonic phrase. Any given wallet may create an arbitrary number of accounts. For example, a single wallet can be used to provision multiple Textile Photos "accounts", each with a completely different persona. This provides a powerful partitioning framework.
-  - Textile account seeds (private keys) always start with an "S" for "secret" and account addresses (public keys) always start with a "P" for "public".
-  - The actual implementation is a BIP32 Hierarchical Deterministic Wallet based on Stellar's implementation of SLIP-0010.
-  - Account seeds and their public addresses are generated via the wallet pass-phrase. Textile uses ed25519 keys, which is public-key signature system with several attractive features like fast key generation, signing, and verification. These properties become important on less powerful devices like phones.
-  - Account seeds are used to provision new Textile peers. For example, a mobile peer, a desktop peer (like we'll be doing today), etc. Individual peers are tied to a single IPFS instance.
-  - Peers that are backed by the same account are called account peers. Account peers will automatically stay in sync. They are able to instruct one another to create and delete threads. Additionally, they will continuously search the network for each other's encrypted thread snapshots (metadata and the latest update hash, usually stored by cafes).
-  - Accounts can *also* have profiles, like any standard web 2.0 account. These profiles are self-sovereign, and can include an avatar, display name, and soon even external verified credentials.
+- Textile uses a hierarchical deterministic (HD) wallet to derive account keys from a set of unique words, called a mnemonic phrase.
+- Every account seed "inside" the wallet can be derived from this mnemonic phrase. Meaning that the wallet effectively *is* the mnemonic phrase. Any given wallet may create an arbitrary number of accounts. For example, a single wallet can be used to provision multiple Textile Photos "accounts", each with a completely different persona. This provides a powerful partitioning framework.
+- Textile account seeds (private keys) always start with an "S" for "secret" and account addresses (public keys) always start with a "P" for "public".
+- The actual implementation is a BIP32 Hierarchical Deterministic Wallet based on Stellar's implementation of SLIP-0010.
+- Account seeds and their public addresses are generated via the wallet pass-phrase. Textile uses ed25519 keys, which is public-key signature system with several attractive features like fast key generation, signing, and verification. These properties become important on less powerful devices like phones.
+- Account seeds are used to provision new Textile peers. For example, a mobile peer, a desktop peer (like we'll be doing today), etc. Individual peers are tied to a single IPFS instance.
+- Peers that are backed by the same *account* are called account peers. Account peers will automatically stay in sync. They are able to instruct one another to create and delete threads. Additionally, they will continuously search the network for each other's encrypted thread snapshots (metadata and the latest update hash, usually stored by cafes).
+- Accounts can *also* have profiles, like any standard web 2.0 account. These profiles are self-sovereign, and can include an avatar, display name, and soon even externally verified credentials.
 
 ---
 
@@ -163,41 +181,24 @@ note:
   - Access controls (*can I play too?*)
   - Offline edits, and more...
 
+note:
+- Textile's 'Threads' are the backbone of Textile's encrypted, recoverable, schema-based, and cross-application data storage.
+- Think of a thread as a decentralized database of encrypted files and messages, shared between specific participants.
+- For our purposes, Threads provide replication (who's it?), p2p updates (tag you're it), conflict resolution (no you're it), queries (wait, who's it?), access controls (hey folks, can i play too), offline edits, and more...
+
 --
 
 <!-- .slide: data-background-image="./images/threads.png" data-background-size="contain" -->
 
 note:
-  - Threads are the backbone of Textile's encrypted, recoverable, schema-based, and cross-application data storage. Think of a thread as a decentralized database of encrypted files and messages, shared between specific participants.
-  - At the core of every thread is a secret. Only peers that possess the secret can decrypt thread content or follow linkages.
-  - Unlike a blockchain, threads are not based around the idea of consensus. Instead, they follow an agent-centric approach similar to holochain. Each peer has authority over thread access-control and storage.
-  - Because threads are simply a hash-chain of update messages, or blocks, they can represent any type of dataset. Some blocks point to off-chain data stored on IPFS. For example, a set of photos, a PDF, or even a tag event. 
-  - Application developers are able to add structure to threads and make them interoperable with other applications by using schemas (more on this in a bit).
-  - Threads are auto-magically synced with other account peers. For example, you may have one peer on your phone, and another on your laptop, both with access to the same account seed (which we talked about earlier).
-  - Threads can *also* be shared with other non-account peers (other users).
-  - In each case, each peer maintains a copy of its threads. A p2p messaging protocol keeps all the copies in sync.
-  - The special hash-chain or graph structure of a thread allows them to be easily shared with other peers and backed-up to cafes. Given one message, you can find all the others.
-
---
-
-## Requirements
-
-- Conflict resistant
-- Mud puddle resistant
-- Offline-first
-- Secure
-- Language agnostic
-
-Both a data **structure** & **protocol**
-
-note:
-  - Threads are supposed to serve a decentralized cloud-like function for safely storing and retrieving data generated by applications for users, i.e., photos, messages, contacts, tag events, etc. They were designed with the following requirements in mind:
-    - Conflict resistant: Similar to ipfs-log, a thread should facilitate a resilient, distributed state, shared among multiple members (and/or devices).
-    - Mud puddle resistant: There should be a way to safely backup a thread's state such that the owner can recover it.
-    - Offline-first: Because most people access the internet primarily from mobile devices, threads must enable a UX that works well in scenarios where connectivity is spotty, and peers are continually coming and going from the network.
-    - Secure: Peers must sign updates and encrypted with the shared key. Ideally, linkages should also be obscured by encryption.
-    - Agnostic: Threads aim to be language and platform agnostic. For this reason, Textile uses protocol buffers extensively because they are a "language-neutral, platform-neutral, extensible mechanism for serializing structured data".
-  - So on the one hand, threads are a data model for representing a dataset as a hash-chain of updates. On the other hand, it's a protocol for orchestrating that state between peers.
+- At the core of every thread is a secret. Only peers that possess the secret can decrypt thread content or follow linkages.
+- Unlike a blockchain, threads are not based around the idea of consensus. Instead, they follow an agent-centric approach similar to holochain. Each peer has authority over thread access-control and storage.
+- Because threads are simply a hash-chain of update messages, or blocks, they can represent any type of dataset. Some blocks point to off-chain data stored on IPFS. For example, a set of photos, a PDF, or even a tag event. 
+- Application developers are able to add structure to threads and make them interoperable with other applications by using schemas (more on this in a bit).
+- Threads are auto-magically synced with other account peers. For example, you may have one peer on your phone, and another on your laptop, both with access to the same account seed (which we talked about earlier).
+- Threads can *also* be shared with other non-account peers (other users).
+- In each case, each peer maintains a copy of its threads. A p2p messaging protocol keeps all the copies in sync.
+- The special hash-chain or graph structure of a thread allows them to be easily shared with other peers and backed-up to cafes. Given one message, you can find all the others.
 
 --
 
@@ -206,39 +207,31 @@ note:
 ![](https://docs.textile.io/images/fingerprint.png)
 
 note:
-  - Control over thread access and sharing is handled by a combination of the type and sharing settings.
-  - An immutable member address "whitelist" gives the initiator fine-grained control. An empty whitelist is taken to be "everyone", which is the default.
-  - Threads also support general access control in the form of 'private', 'read-only', 'public', and 'open' threads.
-  - Similarly, inviting new members to a thread can be controlled via sharing control, with options for 'not sharable', 'invite only', or 'shared'.
-  - We're actually in the process of revamping our access control settings to feel more like web 2.0 style settings. I believe there is actually going to be a session about this with the Epona team?
+- Control over thread access and sharing is handled by a combination of the type and sharing settings.
+- An immutable member address "whitelist" gives the initiator fine-grained control. An empty whitelist is taken to be "everyone", which is the default.
+- Threads also support general access control in the form of 'private', 'read-only', 'public', and 'open' threads.
+- Similarly, inviting new members to a thread can be controlled via sharing control, with options for 'not sharable', 'invite only', or 'shared'.
+- We're actually in the process of revamping our access control settings to feel more like web 2.0 style settings
+- Fun fact, part of the design for our new access controls came from collaborating with the Permaweb.io folks.
 
 --
 
 <!-- .slide: data-background-image="./images/thread.png" data-background-size="contain" -->
 
 note:
-  - Blocks are the raw components of a thread. Think of them as an append-only log of thread updates where each one is hash-linked to its parent(s), forming a tree. New / recovering peers can sync history by merely traversing the hash tree.
-  - In practice, blocks are small (encrypted) protocol buffers, linked together by their IPFS CID (content id or hash).
-  - There are several block types:
-    - MERGE:    3-way merge added.
-    -  IGNORE:   A block was ignored.
-    -  FLAG:     A block was flagged.
-    -  JOIN:     Peer joined.
-    -  ANNOUNCE: Peer set username / avatar / inbox addresses
-    -  LEAVE:    Peer left.
-    -  TEXT:     Text message added.
-    -  FILES:    File(s) added.
-    -  COMMENT:  Comment added to another block.
-    -  LIKE:     Like added to another block.
-  - The orchestration of thread state between peers can be thought of as syncing a graph of blocks and files, which involves sending outbound updates and reading inbound updates. In practice, this is handled by a *libp2p service*.
+- So I mentioned a chain of events or blocks earlier.
+- Blocks are the raw components of a thread. Think of them as an append-only log of thread updates where each one is hash-linked to its parent(s), forming a tree.
+- New / recovering peers can sync history by merely traversing the hash tree.
+- In practice, blocks are small (encrypted) protocol buffers, linked together by their IPFS CID (content id or hash). There are several block types: including blocks for files, messages, thread invites, liking, leaving a thread, etc.
+- The orchestration of thread state between peers can be thought of as syncing a graph of blocks and files, which involves sending outbound updates and reading inbound updates. In practice, this is handled by a custom *libp2p service*.
 
 --
 
 <!-- .slide: data-background-image="https://docs.textile.io/images/files.png" data-background-size="contain" -->
 
 note:
-  - Any data added to a thread ends up as a file. Most of the time, a schema is used to define one or more types of data in a thread such that other users and applications can understand it.
-  - Thread data is built into an IPLD merkle DAG structure (similar to a merkle tree) and stored separately from update blocks on IPFS. A FILES block points to the top-level hash of a file's DAG node. The actual structure of files DAG nodes are determined by, and validated against, a schema, which is where our game gets it's rules...
+- Any *data* added to a thread ends up as a file. Most of the time, a schema is used to define one or more types of data in a thread such that other users and applications can understand it.
+- Thread data is built into an IPLD merkle DAG structure (similar to a merkle tree) and stored separately from update blocks on IPFS. A FILES block points to the top-level hash of a file's DAG node. The actual structure of files DAG nodes are determined by, and validated against, a schema, which is where our game gets it's rules...
 
 ---
 
@@ -249,6 +242,18 @@ note:
 --
 
 ## Schemas
+
+- Two main functions
+  - Define a Thread's data DAG structure
+  - Define the order of mills (transforms) needed to produce this structure
+
+note:
+- A thread can have only one schema. A thread schema has two main functions:
+  - Define a Thread's data DAG structure
+  - Define the order of mills (transforms) needed to produce this structure from the input
+- To illustrate these functions, take a look at the builtin media schema. 
+
+--
 
 ```json
 {
@@ -282,15 +287,12 @@ note:
     }
   }
 }
-``` 
+```
 
 note:
-  - A thread can have only one schema. It has two main functions:
-    - Define a Thread's data DAG structure
-    - Define the order of mills (transforms) needed to produce this structure from the input
-  - To illustrate these functions, take a look at the builtin media schema. Each link (large, small, thumb) produces a resized and encrypted image by leveraging the image/resize mill.
-  - Notice that the thumb link uses the large as input. This means that large will need to milled (that's what we call a transform function) before thumb.
-  - Once you understand how schemas and mills work, you can design complex workflows and structures for your applications.
+- Each link (large, small, thumb) produces a resized and encrypted image by leveraging the image/resize mill.
+- Notice that the thumb link uses the large as input. This means that large will need to milled (that's what we call a transform function) before thumb.
+- Once you understand how schemas and mills work, you can design complex workflows and structures for your applications.
 
 --
 
@@ -302,10 +304,11 @@ note:
   - Index
 
 note:
-  - The meta and content node pairs in a files DAG (which we'll see in a moment) are generated by file mills. Mills serve three distinct purposes:
-    -  Validate the input against accepted media types. The JSON mill will also validate the input against a JSON Schema.
-    - Transform the input data, e.g., encode, resample, encrypt, etc.
-    - Index a metadata object (JSON) describing the transformed output. This allows thread content to be efficiently queried and provides a mechanism for de-duplicating encrypted data.
+- The meta and content node pairs in a files DAG (which we'll see in a moment) are generated by file mills.
+- Mills serve *three* distinct purposes:
+  -  Validate the input against accepted media types. The JSON mill will also validate the input against a JSON Schema.
+  - Transform the input data, e.g., encode, resample, encrypt, etc.
+  - Index a metadata object (JSON) describing the transformed output. This allows thread content to be efficiently queried and provides a mechanism for de-duplicating encrypted data.
 
 --
 
@@ -314,8 +317,8 @@ note:
 note:
   - In addition to the transformed bytes, a mill will produce a file metadata object for every input.
   - File metadata objects are what most applications will interact with. They are the objects listed by the Files and Feed APIs. These objects are also used internally for various functions. For example, because good encryption is not deterministic, an input's checksum is used to de-duplicate encrypted data.
-  - At this point, it should be clear that adding data to a thread results in a DAG defined by a schema. But how exactly is the data stored so as to be programmatically accessible to thread consumers? Let's take a closer look at the DAG produced by the builtin media schema...
-  - Note that a files target is by default a directory of indexes (0, 1, etc.). This mean that you can add an entire folder of images (or whatever your data is) with a single update.
+  - So, adding data to a thread results in a DAG defined by a schema. But how exactly is the data stored so as to be programmatically accessible to thread consumers? Let's take a closer look at the DAG produced by the builtin media schema...
+  - Note that a files target is by default a directory of indexes (0, 1, etc.). This means that you can add an entire folder of images (or whatever your data is) with a single update.
   - Also, each link (large, small, etc.) will always have the special meta and content sub-links, which correspond to the (usually encrypted) file metadata and content.
 
 --
@@ -387,11 +390,12 @@ note:
 ```
 
 note:
-  - This is a JSON representation of file indexes from a single image corresponding to say, file 0 from the previous slide.
+- This is a JSON representation of file indexes from a single image corresponding to say, file 0 from the previous slide.
+- If a client app requests data about a file target, this is what they'll get.
 
 --
 
-## Summary
+## Recap
 
 - Schemas
   - Threads
@@ -399,13 +403,13 @@ note:
       - Data
 
 note:
-  - Schemas are used to create and validate the structure of thread files, defining their type and purpose for consumers (users and applications). For example, a photos application may create photo-based threads, a health application my create threads with medical records, a tag game may create a thread for tag events, etc.
-  - By treating schemas as first-class citizens, other applications are also able to understand and make use of these threads. We're going to see an example of this a little bit later, where two different apps will leverage the same underlying thread data.
-  - In practice, schemas have three distinct roles:
-    - Provide instructions for how to transform or "mill" an input, e.g., given a photo, create three different sizes and discard the raw input (this is the media schema).
-    - Define whether or not the resulting DAG nodes should be stored (pinned) on account peers.
-    - Validate thread files from other participants, applying the same storage rules as in (2).
-  - The structure of a schema maps closely to the DAG nodes it creates. Highly complex nodes can be specified with dependencies between each link. A peer will automatically sort this 'graph' of dependencies (using topological sorting) into a series of "steps". Each step is handled by a mill.
+- Schemas are used to create and validate the structure of thread files, defining their type and purpose for consumers (users and applications). For example, a photos application may create photo-based threads, a health application my create threads with medical records, a tag game may create a thread for tag events, etc.
+- By treating schemas as first-class citizens, other applications are also able to understand and make use of these threads. We're going to see an example of this a little bit later, where two different apps will leverage the same underlying thread data.
+- In practice, schemas have three distinct roles:
+  - Provide instructions for how to transform or "mill" an input, e.g., given a photo, create three different sizes and discard the raw input (this is the media schema).
+  - Define whether or not the resulting DAG nodes should be stored (pinned) on account peers.
+  - Validate thread files from other participants, applying the same storage rules as in (2).
+- The structure of a schema maps closely to the DAG nodes it creates. Highly complex nodes can be specified with dependencies between each link. A peer will automatically sort this 'graph' of dependencies (using topological sorting) into a series of "steps". Each step is handled by a mill.
 
 ---
 
@@ -420,14 +424,14 @@ note:
 ![](https://docs.textile.io/images/contact.png)
 
 note:
-  - Textile is based around the idea of sharing information between peers. Since this is the case, we need a way to identify and distinguish between different peers or accounts.
-  - As you've already seen, we have the concept of a wallet and account address, which is exactly how we also distinguish between contacts. Textile has taken a pretty agnostic approach to decentralized identity so far, because there are so many folks working in this space. To date, we haven't focused too much on *unique* ids, or provable real-world identities, but it is easy to link external identities (say a Keybase ID, or some DiD framework such as such as IDM) to a Textile wallet or account
-  - In that vein, a contact can be thought of as a set of ephemeral agents (peers) owned by a single account. That account can have whatever avatar, display name, real-world association that you want.
-  - Each of these peers shares a special private account thread, which tracks account peers, profile information, and known contacts. When indexed, this thread provides:
-    - A "self" contact, much like iOS or other contact systems, which is advertised to the network and indexed for search by registered cafes.
-    - A contact "address book" for interacting with other users.
-  - As shown in the diagram here, a contact will display profile information (name and avatar) from the most recently updated peer. This is pretty powerful, because it means changes made on your mobile device will be automatically reflected on your desktop or in other user's thread information. The network will update changes you make automatically, in an offline-first way.
-  - So for our game of tag, we'll use contact information to invite new users to our game, or join existing games ourselves.
+- Textile is based around the idea of sharing information between peers. Since this is the case, we need a way to identify and distinguish between different peers or accounts.
+- As you've already seen, we have the concept of a wallet and account address, which is exactly how we also distinguish between contacts. Textile has taken a pretty agnostic approach to decentralized identity so far, because there are so many folks working in this space. To date, we haven't focused too much on *unique* ids, or provable real-world identities, but it is easy to link external identities (say a Keybase ID, or some DiD framework such as such as IDM) to a Textile wallet or account
+- In that vein, a contact can be thought of as a set of ephemeral agents (peers) owned by a single account. That account can have whatever avatar, display name, real-world association that you want.
+- Each of these peers shares a special private account thread, which tracks account peers, profile information, and known contacts. When indexed, this thread provides:
+  - A "self" contact, much like iOS or other contact systems, which is advertised to the network and indexed for search by registered cafes.
+  - A contact "address book" for interacting with other users.
+- As shown in the diagram here, a contact will display profile information (name and avatar) from the most recently updated peer. This is pretty powerful, because it means changes made on your mobile device will be automatically reflected on your desktop or in other user's thread information. The network will update changes you make automatically, in an offline-first way.
+- So for our game of tag, we'll use contact information to invite new users to our game, or join existing games ourselves.
 
 ---
 
@@ -445,7 +449,7 @@ note:
   - A terminal/bash/whatever
   - [`go-textile` cli tools](https://github.com/textileio/go-textile)
 - What you'll (maybe) *want*
-  - [**IPFS Tag** mobile app]()
+  - [**IPFS Tag** mobile app](http://t.txtl.us/)
   - Node.js + `npm` tooling
 
 --
@@ -455,11 +459,11 @@ note:
 - Download and extract the [latest release](https://github.com/textileio/go-textile/releases/latest) for your OS and architecture (or use `wget` etc...)
 - macOS and Linux
   - Extract the tarball (manually or via...)
-  ```
-  👩‍💻 tar xvfz go-textile_0.4.0_{os}-amd64.tar.gz`)
+  ```bash
+  👩‍💻 tar xvfz go-textile_0.5.0_{os}-amd64.tar.gz
   ```
   - Move `textile` anyplace in your `PATH` (or via...)
-  ```
+  ```bash
   👨‍💻 ./install
   ```
 - Windows
@@ -469,11 +473,11 @@ note:
 
 ## Extras
 
-1. https://github.com/textileio/ipfs-camp
+1. https://github.com/textileio/ipfs-camp-2019
 2. Clone the repo
 ```
-👩‍💻 git clone https://github.com/textileio/ipfs-camp
-👨‍💻 cd ipfs-camp
+👩‍💻 git clone https://github.com/textileio/ipfs-camp-2019
+👨‍💻 cd ipfs-camp-2019
 ```
 3. Get ready to play around...
 
@@ -573,14 +577,14 @@ note:
 ```
 <!-- .element: class="output" -->
 ```bash
-👩‍💻 textile profile set --name="Carson"
+👩‍💻 textile profile set name "Carson"
 ```
 ```
 ok
 ```
 <!-- .element: class="output" -->
 ```bash
-👨‍💻 textile profile set --avatar="path/to/an/image"
+👨‍💻 textile profile set avatar "path/to/an/image"
 ```
 ```
 ok
@@ -751,7 +755,7 @@ note:
 ## Encryption
 
 ```
-👨‍💻 textile files keys Qmahash
+👨‍💻 textile files keys <target-hash>
 ```
 ```
 {
@@ -972,7 +976,7 @@ note:
 ## Messages
 
 ```bash
-👩‍💻 textile messages add -t <thread-id> "game on"
+👩‍💻 textile messages add <thread-id> "game on"
 ```
 ```
 {
@@ -1002,8 +1006,8 @@ note:
 
 - List thread blocks (`textile thread blocks`)
 - List contacts (`textile contacts list`)
-- Add (more) messages (`textile messages add`)
-- Add (more) data (`textile files add`)
+- (more) messages (`textile messages --help`)
+- (more) data (`textile files --help`)
 - View a feed (`textile feed`)
 - Observe real-time updates (`textile observe`)
 - Get help (`textile <sub command> --help`)

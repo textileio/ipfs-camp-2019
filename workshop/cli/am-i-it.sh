@@ -15,7 +15,7 @@ if THREAD=$(textile threads get $ID 2>&1); then
   declare -i STARTED
   STARTED=0
   # Get all existing blocks created by current user
-  for row in $( textile file list -t $ID -l100000 | jq  --arg INITIATOR "$INITIATOR" -r '.items[] | select(.user.address == $INITIATOR) | .files[0].file.hash' ); do
+  for row in $( textile file list thread $ID -l100000 | jq  --arg INITIATOR "$INITIATOR" -r '.items[] | select(.user.address == $INITIATOR) | .files[0].file.hash' ); do
     START=$( textile file get $row --content | jq 'select(.event == "start")')
     # If we got any results back from Start events, we can skip creating it again
     if [ ! -z "$START" ]; then
@@ -34,7 +34,7 @@ if THREAD=$(textile threads get $ID 2>&1); then
 
   declare -i N
   N=1
-  for row in $( textile feed -l1000000 -t $ID | jq --unbuffered -cr ".items | reverse | .[] | select(.payload.\"@type\" == \"/Files\") | @base64" ); do
+  for row in $( textile feed $ID -l 1000000 | jq --unbuffered -cr ".items | reverse | .[] | select(.payload.\"@type\" == \"/Files\") | @base64" ); do
     # Only the person that is Tagged creates updates we care about
     DECODED=$(echo $row | base64 --decode)
     AUTHOR=$(echo $DECODED | jq -r ".payload.user.address")

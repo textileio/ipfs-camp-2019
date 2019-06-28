@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ID=${1?param missing - threadId.}
 
 # textile threads get 12D3KooWRhJkorg7tKrp6qUHjrbCVXLYY5juYLyVhC2Wo6ncZyjG
@@ -15,7 +16,7 @@ if THREAD=$(textile threads get $ID 2>&1); then
     fi
 
     # Get all existing blocks created by current user
-    for row in $( textile file list -t $ID -l100000 | jq  --arg ADDRESS "$ADDRESS" -r '.items[] | select(.user.address == $ADDRESS) | .files[0].file.hash' ); do
+    for row in $( textile file list thread $ID -l100000 | jq  --arg ADDRESS "$ADDRESS" -r '.items[] | select(.user.address == $ADDRESS) | .files[0].file.hash' ); do
       START=$( textile file get $row --content | jq 'select(.event == "start")')
 
       # If we got any results back from Start events, we can skip creating it again
@@ -28,7 +29,7 @@ if THREAD=$(textile threads get $ID 2>&1); then
 
     # If game isn't started, let's kick it off!
     START='{ "event": "start", "target": "'$ADDRESS'" }'
-    echo $START | jq '.' | textile file add -t "$ID"
+    echo $START | jq '.' | textile file add $ID
     echo "Game started! Tag you're it!"
 
 
