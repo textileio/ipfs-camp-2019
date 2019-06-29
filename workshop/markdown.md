@@ -14,6 +14,9 @@ highlightTheme: "vs"
 
 ## Welcome!
 
+SSID: `Internet Backup - C`  
+Password: `ShareWithIPFS`
+
 ![](https://docs.textile.io/images/hand.png)
 
 note:
@@ -976,7 +979,7 @@ note:
 
 - [Create a peerpad](https://peerpad.net) to share thread information
 - Use me:
-  - `12D3KooWHbuPJ7cJ9kKXKrx6M3Wgakup5DjCa6jMwLodPYDiVpSX`
+  - `P4YL7j6fGAwA8WUo9vLGEaDDoKUFrcWEZjDYbRXHtfjMzysc`
 - Invite them directly
     ```bash
     👩‍💻 textile invite create <thread-id> --address=<neighbor-peer-id>
